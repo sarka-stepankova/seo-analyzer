@@ -1,0 +1,27 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/frontend/node_modules
+/frontend/seo-analyzer/node_modules
+/frontend/seo-analyzer/.pnp
+/frontend/seo-analyzer/.pnp.js
+
+# testing
+/frontend/seo-analyzer/coverage
+
+# production
+/frontend/seo-analyzer/build
+
+# misc
+/frontend/seo-analyzer/.DS_Store
+/frontend/seo-analyzer/.env.local
+/frontend/seo-analyzer/.env.development.local
+/frontend/seo-analyzer/.env.test.local
+/frontend/seo-analyzer/.env.production.local
+
+/frontend/seo-analyzer/npm-debug.log*
+/frontend/seo-analyzer/yarn-debug.log*
+/frontend/seo-analyzer/yarn-error.log*
+
+# backend
+/backend/report.txt
