@@ -6,11 +6,118 @@ from collections import Counter
 import requests
 import re
 import stopwordsiso as stopwords
-
+import time
+from selenium import webdriver
+from selenium.webdriver.common.by import By
 
 app = Flask(__name__)
 # CORS setup...
 CORS(app)
+
+def extract_canonical_tag(soup):
+    canonical_tag = soup.find('link', attrs={'rel': 'canonical'})
+    canonical_url = canonical_tag['href'] if canonical_tag else None
+    return canonical_url
+
+def measure_response_time(url):
+    start_time = time.time()
+    response = requests.get(url)
+    end_time = time.time()
+    response_time = end_time - start_time
+    return response_time
+
+def measure_page_size(html_content):
+    soup = BeautifulSoup(html_content, 'html.parser')
+    
+    # Extract text content from <html> and <body> tags
+    html_body_text = ' '.join(tag.get_text() for tag in soup.find_all(['html', 'body']))
+    
+    # Calculate size of text content in kilobytes
+    size_in_bytes = len(html_body_text.encode('utf-8'))
+    size_in_kb = size_in_bytes / 1024  # Convert bytes to kilobytes
+    
+    return size_in_kb
+
+def take_mobile_snapshot(url):
+    save_fn = "mobile-snapshot.png"
+
+    options = webdriver.FirefoxOptions()
+    options.add_argument('--headless')
+    options.add_argument('--disable-gpu')
+    options.add_argument("--auto-open-devtools-for-tabs")
+
+    # Set up mobile emulation
+    options.set_preference("general.useragent.override", "Mozilla/5.0 (Linux; Android 8.0; Pixel 2 XL Build/OPD3.170816.012) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.87 Mobile Safari/537.36")
+
+    driver = webdriver.Firefox(options=options)
+
+    # Set window size to match mobile device (Samsung Galaxy S9)
+    driver.set_window_size(360, 740)
+
+    driver.get(url)
+    
+    # Wait for the page to fully load (adjust the delay as needed)
+    time.sleep(1)
+
+    print(driver.title)
+
+    # Take screenshot
+    driver.save_screenshot(save_fn)
+
+    driver.quit()
+
+    return save_fn
+
+def take_search_result_snapshot(url):
+    search_query = url
+
+    save_fn = "search-results.png"
+
+    options = webdriver.FirefoxOptions()
+    options.add_argument('--headless')
+    options.add_argument('--disable-gpu')
+
+    driver = webdriver.Firefox(options=options)
+
+    # Perform a search query using Firefox address bar
+    search_url = f"https://www.google.com/search?q={search_query}"
+    driver.get(search_url)
+
+    # Wait for search results to load
+    time.sleep(1)
+
+    # Click on the "Přijmout vše" button
+    accept_button = driver.find_element(By.ID, "L2AGLb")
+    accept_button.click()
+
+    driver.save_screenshot(save_fn)
+
+    driver.quit()
+
+    return save_fn
+
+def is_directory_listing_disabled(url):
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            # Check if the response contains directory listing
+            if "Index of" in response.text:
+                return False
+            else:
+                return True
+        else:
+            return False
+    except Exception as e:
+        print(f"Error checking directory listing: {e}")
+        return False
+    
+def is_https_enabled(url):
+    try:
+        response = requests.get(url)
+        return response.url.startswith("https")
+    except Exception as e:
+        print(f"Error checking HTTPS: {e}")
+        return False
 
 @app.route('/analyze', methods=['POST'])
 def analyze_url():
@@ -25,6 +132,13 @@ def analyze_url():
 
         # Parse HTML content using BeautifulSoup
         soup = BeautifulSoup(response.text, 'html.parser')
+
+        # Extract canonical tag
+        canonical_url = extract_canonical_tag(soup)
+
+        # Measure response time
+        # The response time of your homepage is 0.xx seconds. It is recommended to keep it equal to or below 0.2 seconds.
+        response_time = measure_response_time(url)
 
         ### EXTRACT TITLE TAG
         # title tag should be between 30 to 60 characters long
@@ -104,11 +218,24 @@ def analyze_url():
 
         most_common_keywords = word_freq.most_common(10)
 
-        for keyword, frequency in most_common_keywords:
-            print(keyword, ":", frequency)
+        ### EXTRACT PAGE SIZE ###
+        # Ideally, keep the HTML page size around 100 kB or less.
+        # In some cases (like ecommerce) it's ok to have pages around 150kB-200kB
+        page_size = measure_page_size(response.text)
+
+        ### TAKE MOBILE SNAPSHOT ###
+        mobile_snapshot_path = take_mobile_snapshot(url)
+
+        ### WEB BROWSER PREVIEW ###
+        search_result_snapshot = take_search_result_snapshot(url)
+
+        directory_listing_disabled = is_directory_listing_disabled(url)
+        https_enabled = is_https_enabled(url)
 
         # Prepare analysis report
         report = {
+            'canonical_url': canonical_url,
+            'response_time': response_time,
             'title': title_tag,
             'title_length': title_length,
             'meta_description': meta_description_content,
@@ -122,7 +249,12 @@ def analyze_url():
             'external_links': external_links,
             'internal_links_number': internal_links_number,
             'external_links_number': external_links_number,
-            'keyword_frequency': most_common_keywords
+            'keyword_frequency': most_common_keywords,
+            'page_size': page_size,
+            'mobile_snapshot_path': mobile_snapshot_path,
+            'search_result_snapshot': search_result_snapshot,
+            'directory_listing_disabled': directory_listing_disabled,
+            'https_enabled': https_enabled
         }
 
         # Save report to file
