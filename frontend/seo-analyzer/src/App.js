@@ -1,11 +1,15 @@
 import React from 'react';
 import AnalysisForm from './components/AnalysisForm';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './themes/customTheme';
 
 function App() {
   return (
-    <div className="App">
-      <AnalysisForm />
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <AnalysisForm />
+      </div>
+    </ThemeProvider>
   );
 }
 
