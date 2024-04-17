@@ -4,6 +4,12 @@ import axios from 'axios';
 import ResultsPie from './ResultsPieChart';
 import HeadText from './HeadText';
 import TitleAnalysis from './TitleAnalysis';
+import MetaDescriptionAnalysis from './MetaDescriptionAnalysis';
+import H1HeadingAnalysis from './H1HeadingAnalysis';
+import H2HeadingAnalysis from './H2HeadingAnalysis';
+import AltAttributesAnalysis from './AltAttributesAnalysis';
+import LinksRatioAnalysis from './LinksRatioAnalysis';
+import CommonKeywordsAnalysis from './CommonKeywordsAnalysis';
 
 const AnalysisForm = () => {
   const [url, setUrl] = useState('');
@@ -59,11 +65,19 @@ const AnalysisForm = () => {
       {error && <Typography color="error">{error}</Typography>}
       {report && (
         <div>
-          <Typography variant="h6">Analysis Report:</Typography>
+          <Typography variant="h6"><HeadText></HeadText>Analysis Report:</Typography>
           <ResultsPie report={report.results} />
 
           <HeadText>Basic SEO</HeadText>
           <TitleAnalysis report={report} />
+          <MetaDescriptionAnalysis report={report} />
+          {/* TODO: other analysis results */}
+          <H1HeadingAnalysis report={report} />
+          <H2HeadingAnalysis report={report} />
+          <AltAttributesAnalysis report={report} />
+          <LinksRatioAnalysis report={report} />
+          <CommonKeywordsAnalysis  report={report} />
+          
 
           <HeadText>Advanced SEO</HeadText>
         </div>

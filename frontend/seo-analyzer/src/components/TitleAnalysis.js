@@ -10,7 +10,9 @@ const TitleAnalysis = ({ report }) => {
 
   return (
     <Typography>
-      <span style={{ fontWeight: 'bold' }}>Title</span> <HelpIconWithTooltip title="Analysis of your site's HTML title" />: <span style={{ fontWeight: 'bold', fontFamily: 'monospace', backgroundColor: '#F0F4F8' }}>{report.title}</span>
+      <span style={{ fontWeight: 'bold' }}>Title</span> <HelpIconWithTooltip title="Analysis of your site's HTML title" />:
+      <br />
+       <span style={{ fontWeight: 'bold', fontFamily: 'monospace', backgroundColor: '#F0F4F8' }}>{report.title}</span>
       <br /> 
       <IconBasedOnReport report_test={report.title_length_test}/> Your title is {report.title_length} characters long. {additionalSentence}
     </Typography>

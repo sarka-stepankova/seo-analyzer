@@ -133,7 +133,7 @@ class WebAnalyzer:
         return headings
     
     def test_h1_number(self, h1_number, results):
-        if h1_number is 1:
+        if h1_number == 1:
             results['passed'] += 1
             return "passed"
         else:
@@ -187,8 +187,8 @@ class WebAnalyzer:
             results['passed'] += 1
             return "passed"
         else:
-            results['failed'] += 1
-            return "failed"
+            results['warning'] += 1
+            return "warning"
 
     # EXTRACT TEXT content and calculate keyword frequency
     # Just informative
@@ -202,7 +202,7 @@ class WebAnalyzer:
 
         additional_stopwords = set([
             "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20",
-            "00", "01"
+            "00", "01", '21', '22', '23', '24', '25', '26', '27', '28', '29', '30'
         ])
 
         # Filter out stopwords
@@ -316,7 +316,7 @@ class WebAnalyzer:
         internal_links, external_links = self.extract_links(url, soup)
         internal_links_number = len(internal_links)
         external_links_number = len(external_links)
-        links_number_retio_test = self.test_links_number_ratio(internal_links_number, external_links_number, results)
+        links_number_ratio_test = self.test_links_number_ratio(internal_links_number, external_links_number, results)
 
         most_common_keywords = self.extract_most_common_keywords(soup)
         most_common_keywords_test = "informative"
@@ -324,8 +324,11 @@ class WebAnalyzer:
         page_size = self.measure_page_size(response.text)
         page_size_test = self.test_page_size(page_size, results)
 
-        mobile_snapshot_path = screenshot_taker.take_mobile_snapshot(url)
-        search_result_snapshot = screenshot_taker.take_search_result_snapshot(url)
+        # mobile_snapshot_path = screenshot_taker.take_mobile_snapshot(url)
+        # search_result_snapshot = screenshot_taker.take_search_result_snapshot(url)
+        search_result_snapshot = "shsh"
+        mobile_snapshot_path = "shshsh"
+
         mobile_snapshot_path_test = "informative"
         search_result_snapshot_test = "informative"
 
@@ -358,7 +361,7 @@ class WebAnalyzer:
             'external_links': external_links,
             'internal_links_number': internal_links_number,
             'external_links_number': external_links_number,
-            'links_number_retio_test': links_number_retio_test,
+            'links_number_ratio_test': links_number_ratio_test,
             'keyword_frequency': most_common_keywords,
             'most_common_keywords_test': most_common_keywords_test,
             'page_size': page_size,

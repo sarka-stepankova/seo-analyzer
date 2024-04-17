@@ -25,8 +25,6 @@ class ScreenshotTaker:
         # Wait for the page to fully load
         time.sleep(1)
 
-        print(driver.title)
-
         # Take screenshot
         driver.save_screenshot(save_fn)
         driver.quit()

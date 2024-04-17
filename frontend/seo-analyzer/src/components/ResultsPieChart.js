@@ -5,8 +5,6 @@ const ResultsPie = ({ report }) => {
   // Extracting data from the report object
   const { passed, warning, failed } = report;
 
-  const total = passed + warning + failed;
-
   return (
     <PieChart
       colors={['#58BB58', '#F7CA63', '#ED6A5E']}

@@ -2,6 +2,7 @@ import * as React from 'react';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import ErrorRoundedIcon from '@mui/icons-material/ErrorRounded';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
+import InfoIcon from '@mui/icons-material/Info';
 
 const IconBasedOnReport = ({ report_test }) => {
   let iconComponent;
@@ -13,7 +14,7 @@ const IconBasedOnReport = ({ report_test }) => {
   } else if (report_test === 'failed') {
     iconComponent = <CancelRoundedIcon sx={{ fontSize: '1.4rem', color: '#F44336' }} />;
   } else { // informative
-    iconComponent = <ErrorRoundedIcon sx={{ fontSize: '1.4rem', color: '#069DE3' }} />;
+    iconComponent = <InfoIcon sx={{ fontSize: '1.4rem', color: '#069DE3' }} />;
   }
 
   return iconComponent;
