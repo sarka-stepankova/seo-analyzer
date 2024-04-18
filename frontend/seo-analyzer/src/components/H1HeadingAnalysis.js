@@ -11,7 +11,7 @@ const H1HeadingAnalysis = ({ report }) => {
   return (
     <div style={{ paddingTop: '20px' }}>
     <Typography>
-      <span style={{ fontWeight: 'bold' }}>H1 Heading</span> <HelpIconWithTooltip title="Analysis of the number of your H1 tags on page." />:
+      <span style={{ fontWeight: 'bold' }}>H1 Heading <HelpIconWithTooltip title="Analysis of the number of your H1 tags on page." />:</span>
       <br />
       <IconBasedOnReport report_test={report.h1_number_test}/> {additionalSentence}
     </Typography>

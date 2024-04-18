@@ -7,7 +7,7 @@ const LinksRatioAnalysis = ({ report }) => {
   return (
     <div style={{ paddingTop: '20px' }}>
     <Typography>
-      <span style={{ fontWeight: 'bold' }}>Links Ratio</span> <HelpIconWithTooltip title="Analysis of the ratio of internal links to external links." />:
+      <span style={{ fontWeight: 'bold' }}>Links Ratio <HelpIconWithTooltip title="Analysis of the ratio of internal links to external links." />:</span>
       <br />
       <span style={{ fontWeight: 'bold', fontFamily: 'monospace' }}>
         internal: {report.internal_links_number}<br />

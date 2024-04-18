@@ -11,7 +11,7 @@ const HeadText = ({ children }) => {
         padding: '10px',
         marginTop: '30px',
         marginBottom: '20px',
-        color: '#FFFFFC',
+        color: '#FFFFFC'
       }}
     >
       {children}

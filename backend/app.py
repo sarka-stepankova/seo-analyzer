@@ -1,4 +1,5 @@
-from flask import Flask, jsonify, request
+import os
+from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 from web_analysis import WebAnalyzer
 
@@ -7,6 +8,11 @@ app = Flask(__name__)
 CORS(app)
 
 web_analyzer = WebAnalyzer(app)
+
+# Serve images from the 'backend' folder
+@app.route('/images/mobile-snapshot.png')
+def serve_mobile_snapshot():
+    return send_from_directory('.', 'mobile-snapshot.png')
 
 @app.route('/analyze', methods=['POST'])
 def analyze_url():

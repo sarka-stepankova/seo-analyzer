@@ -18,7 +18,7 @@ const CommonKeywordsAnalysis = ({ report }) => {
       </Typography>
       <div style={{ display: 'flex', flexWrap: 'wrap' }}>
         {keywordFrequency.map((keyword, index) => (
-          <div key={index} style={{ margin: '5px', padding: '5px', background: '#f0f0f0', borderRadius: '4px' }}>
+          <div key={index} style={{ margin: '5px', padding: '5px', background: '#F0F4F8', borderRadius: '4px' }}>
             <span style={{ fontSize: '16px' }}>
               {keyword[0]}
             </span>

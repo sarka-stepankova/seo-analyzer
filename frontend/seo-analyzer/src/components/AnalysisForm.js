@@ -10,6 +10,13 @@ import H2HeadingAnalysis from './H2HeadingAnalysis';
 import AltAttributesAnalysis from './AltAttributesAnalysis';
 import LinksRatioAnalysis from './LinksRatioAnalysis';
 import CommonKeywordsAnalysis from './CommonKeywordsAnalysis';
+import MobileSnapshotAnalysis from './MobileSnapshotAnalysis';
+import SecureConnAnalysis from './SecureConnAnalysis';
+import DirListingAnalysis from './DirListingAnalysis';
+import PageSizeAnalysis from './PageSizeAnalysis';
+import ResponseTimeAnalysis from './ResponseTimeAnalysis';
+import CanonicalTagAnalysis from './CanonicalTagAnalysis';
+import LinearIndeterminate from './LinearIndeterminate';
 
 const AnalysisForm = () => {
   const [url, setUrl] = useState('');
@@ -43,7 +50,7 @@ const AnalysisForm = () => {
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="md" sx={{pb: 20, pt: 5}}>
       <Typography variant="h4" gutterBottom>
         SEO Analyzer
       </Typography>
@@ -62,24 +69,39 @@ const AnalysisForm = () => {
           {loading ? 'Analyzing...' : 'Analyze'}
         </Button>
       </form>
+      {loading && <LinearIndeterminate />}
       {error && <Typography color="error">{error}</Typography>}
       {report && (
         <div>
-          <Typography variant="h6"><HeadText></HeadText>Analysis Report:</Typography>
+          <Typography variant="h6"
+            component="div"
+            sx={{
+              backgroundColor: '#243B53',
+              padding: '10px',
+              marginTop: '30px',
+              marginBottom: '20px',
+              color: '#FFFFFC',
+            }}>
+            Analysis Report:
+          </Typography>
           <ResultsPie report={report.results} />
 
           <HeadText>Basic SEO</HeadText>
           <TitleAnalysis report={report} />
           <MetaDescriptionAnalysis report={report} />
-          {/* TODO: other analysis results */}
           <H1HeadingAnalysis report={report} />
           <H2HeadingAnalysis report={report} />
           <AltAttributesAnalysis report={report} />
           <LinksRatioAnalysis report={report} />
           <CommonKeywordsAnalysis  report={report} />
-          
 
           <HeadText>Advanced SEO</HeadText>
+          <MobileSnapshotAnalysis report={report} />
+          <SecureConnAnalysis report={report} />
+          <DirListingAnalysis report={report} />
+          <CanonicalTagAnalysis report={report} />
+          <PageSizeAnalysis report={report} />
+          <ResponseTimeAnalysis report={report} />
         </div>
       )}
     </Container>

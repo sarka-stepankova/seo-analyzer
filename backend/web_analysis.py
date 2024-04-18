@@ -19,6 +19,12 @@ class WebAnalyzer:
     def init_app(self, app):
         CORS(app)
 
+    def my_len(self, text):
+        if text is None:
+            return 0
+        
+        return len(text)
+
     def extract_canonical_tag(self, soup):
         """
         Extracts the canonical URL from the given BeautifulSoup object representing a webpage. Passed - if the webpage is using canonical tag, Failed - not using.
@@ -296,11 +302,11 @@ class WebAnalyzer:
         response_time_test = self.test_response_time(response_time, results)
 
         title_tag = self.extract_title_tag(soup)
-        title_length = len(title_tag)
+        title_length = self.my_len(title_tag)
         title_length_test = self.test_title_length(title_length, results)
 
         meta_description_content = self.extract_meta_description_content(soup)
-        meta_description_length = len(meta_description_content)
+        meta_description_length = self.my_len(meta_description_content)
         meta_description_length_test = self.test_meta_description_length(meta_description_length, results)
 
         headings = self.extract_heading_tags(soup)
@@ -324,10 +330,11 @@ class WebAnalyzer:
         page_size = self.measure_page_size(response.text)
         page_size_test = self.test_page_size(page_size, results)
 
-        # mobile_snapshot_path = screenshot_taker.take_mobile_snapshot(url)
+        mobile_snapshot_path = screenshot_taker.take_mobile_snapshot(url)
+
+        # this result not needed in frontend for now and because it takes a lot of time -> commented
         # search_result_snapshot = screenshot_taker.take_search_result_snapshot(url)
-        search_result_snapshot = "shsh"
-        mobile_snapshot_path = "shshsh"
+        search_result_snapshot = None
 
         mobile_snapshot_path_test = "informative"
         search_result_snapshot_test = "informative"
