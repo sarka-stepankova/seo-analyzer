@@ -5,7 +5,7 @@ import IconBasedOnReport from './IconBasedOnReport';
 
 const PageSizeAnalysis = ({ report }) => {
   const additionalSentence = report.page_size_test === 'passed'
-    ? 'That is good, because it is recommended to keep the HTML page size around 100 kB or smaller.'
+    ? 'This is good, because it is recommended to keep the size of the HTML page to 100 kB or less.'
     : 'Ideally, keep the HTML page size around 100 kB or less. In some cases (like ecommerce) it\'s ok to have pages around 150 kB - 200 kB.';
 
   return (

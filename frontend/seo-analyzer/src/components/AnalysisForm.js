@@ -34,8 +34,14 @@ const AnalysisForm = () => {
     setError(null);
     setReport(null);
 
+    // check if url starts with https, if not alert it
+    let formattedUrl = url.trim();
+    if (!/^https?:\/\//i.test(formattedUrl)) {
+      formattedUrl = `https://${formattedUrl}`;
+    }
+
     try {
-      const response = await axios.post('http://localhost:5000/analyze', { url });
+      const response = await axios.post('http://localhost:5000/analyze', { "url": formattedUrl });
 
       if (response.status === 200) {
         setReport(response.data);

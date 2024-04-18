@@ -384,9 +384,9 @@ class WebAnalyzer:
             'results': results
         }
 
-        # Save report to file
-        with open('report.txt', 'w') as f:
-            for key, value in report.items():
-                f.write(f'{key}: {value}\n')
+        # Save report to file - for Debugging purposes
+        # with open('report.txt', 'w') as f:
+        #     for key, value in report.items():
+        #         f.write(f'{key}: {value}\n')
         
         return report

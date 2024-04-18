@@ -20,8 +20,12 @@ const MetaDescriptionAnalysis = ({ report }) => {
       <Typography>
         <span style={{ fontWeight: 'bold' }}>Meta description <HelpIconWithTooltip title="Analysis of your page's meta description" />:</span>
         <br />
-        <span style={{ fontWeight: 'bold', fontFamily: 'monospace' }}>{report.meta_description}</span>
-        <br /> 
+        {report.meta_description_length !== 0 && (
+          <>
+            <span style={{ fontWeight: 'bold', fontFamily: 'monospace' }}>{report.meta_description}</span>
+            <br />
+          </>
+        )}
         <IconBasedOnReport report_test={report.meta_description_length_test}/> {mainSentence} {additionalSentence}
       </Typography>
     </div>

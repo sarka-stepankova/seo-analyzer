@@ -12,7 +12,7 @@ const CanonicalTagAnalysis = ({ report }) => {
   return (
     <div style={{ paddingTop: '20px' }}>
       <Typography>
-        <span style={{ fontWeight: 'bold' }}>Meta description <HelpIconWithTooltip title="Does your page have canocial url?" />:</span>
+        <span style={{ fontWeight: 'bold' }}>Canonical Tag <HelpIconWithTooltip title="Does your page have canocial url?" />:</span>
         <br />
         <IconBasedOnReport report_test={report.canonical_url_test}/> {additionalSentence}
       </Typography>
